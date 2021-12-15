@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fontsource/roboto": "1.1.13",
+    "@fontsource/roboto": "4.5.1",
     "@fontsource/sriracha": "4.5.0",
     "node-sass": "7.0.0",
     "normalize.css": "8.0.1",
