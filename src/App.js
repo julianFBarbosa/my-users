@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import UserLogin from './UserLogin.js';
+import SocialImage from './assets/undraw_Social_dashboard_re_ocbd.png';
+import 'normalize.css';
+import './style/reset.css';
+import './style/app.scss';
 
 function App() {
+  const isLogged = false;
+  const user = 'Fulano';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app-wrapper'>
+      <div className='app-content'>
+        <header className='app-header'>
+          <main className='app-main'>
+            {isLogged ? (
+              <div className='app-main-content welcome'>
+                <h1 className='app-form-title'>Olá, {user}!</h1>
+                <a className='app-form-button primary' href='/editar'>
+                  Editar meus dados
+                </a>
+                <a className='app-form-link' href='/sair'>
+                  Sair
+                </a>
+              </div>
+            ) : (
+              <div className='app-form'>
+                <div className='app-form-content'>
+                  <h1 className='app-form-title'>Olá, visitante!</h1>
+                  <UserLogin />
+                </div>
+              </div>
+            )}
+          </main>
+        </header>
+        <figure>
+          <img className='app-home-image' src={SocialImage} alt='' />
+        </figure>
+      </div>
     </div>
   );
 }
