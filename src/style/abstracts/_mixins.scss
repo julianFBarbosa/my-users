@@ -1,0 +1,23 @@
+@mixin width($input-size) {
+  @if $input-size == 'xs' {
+    @media screen and (max-width: $width-xs) {
+      @content;
+    }
+  } @else if $input-size == 'sm' {
+    @media screen and (min-width: $width-xs) and (max-width: $width-sm) {
+      @content;
+    }
+  } @else if $input-size == 'md' {
+    @media screen and (min-width: $width-sm) and (max-width: $width-md) {
+      @content;
+    }
+  } @else if $input-size == 'lg' {
+    @media screen and (min-width: $width-md) and (max-width: $width-lg) {
+      @content;
+    }
+  } @else if $input-size == 'xl' {
+    @media screen and (min-width: $width-lg) {
+      @content;
+    }
+  }
+}
