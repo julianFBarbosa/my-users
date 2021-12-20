@@ -12,28 +12,26 @@ function App() {
   return (
     <div className='app-wrapper'>
       <div className='app-content'>
-        <header className='app-header'>
-          <main className='app-main'>
-            {isLogged ? (
-              <div className='app-main-content welcome'>
-                <h1 className='app-form-title'>Olá, {user}!</h1>
-                <a className='app-form-button primary' href='/editar'>
-                  Editar meus dados
-                </a>
-                <a className='app-form-link' href='/sair'>
-                  Sair
-                </a>
+        <div className='app-body'>
+          {isLogged ? (
+            <div className='app-body-content welcome'>
+              <h1 className='app-form-title'>Olá, {user}!</h1>
+              <a className='app-form-button primary' href='/editar'>
+                Editar meus dados
+              </a>
+              <a className='app-form-link' href='/sair'>
+                Sair
+              </a>
+            </div>
+          ) : (
+            <div className='app-form'>
+              <div className='app-form-content'>
+                <h1 className='app-form-title'>Olá, visitante!</h1>
+                <UserLogin />
               </div>
-            ) : (
-              <div className='app-form'>
-                <div className='app-form-content'>
-                  <h1 className='app-form-title'>Olá, visitante!</h1>
-                  <UserLogin />
-                </div>
-              </div>
-            )}
-          </main>
-        </header>
+            </div>
+          )}
+        </div>
         <figure>
           <img className='app-home-image' src={SocialImage} alt='' />
         </figure>
