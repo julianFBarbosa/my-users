@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Icon from '../elements/Icon';
 import { ReactComponent as IconGitHub } from '../../assets/github-icon.svg';
 import { ReactComponent as GmailGitHub } from '../../assets/gmail-icon.svg';
+import { Link } from 'react-router-dom';
+import Input from '../elements/Input';
 
 const UserLogin = () => {
   const [login, setLogin] = useState('');
@@ -14,40 +16,29 @@ const UserLogin = () => {
   return (
     <div className='app-login-form'>
       <form onSubmit={handleSubmit} className='app-form'>
-        <div className='app-form-control'>
-          <label className='app-form-label' htmlFor='user-login'>
-            Email, CPF ou PIS
-          </label>
-          <input
-            className='app-form-input'
-            type='text'
-            name='user-login'
-            id='user-login'
-            value={login}
-            onChange={({ target }) => setLogin(target.value)}
-          />
-        </div>
-        <div className='app-form-control'>
-          <label className='app-form-label' htmlFor='user-password'>
-            Senha
-          </label>
-          <input
-            className='app-form-input'
-            type='password'
-            name='user-password'
-            id='user-password'
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
+        <Input
+          type='text'
+          label='Email, CPF ou PIS'
+          id='login'
+          name='login'
+          value={login}
+          onChange={({ target }) => setLogin(target.value)}
+        />
+        <Input
+          label='Senha'
+          id='password'
+          type='password'
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+        />
         <div>
           <button className='app-form-button primary'>Entrar</button>
-          <a
+          <Link
             className='app-form-button secondary displaced-top'
-            href='/cadastro'
+            to='/cadastro'
           >
             Cadastrar
-          </a>
+          </Link>
           <p className='app-form-separator'>Ou entrar com</p>
           <div className='app-icon-container'>
             <Icon Icon={IconGitHub} href='/login/github' text='Github' />
