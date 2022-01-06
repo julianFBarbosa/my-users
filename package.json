@@ -5,6 +5,8 @@
   "dependencies": {
     "@fontsource/roboto": "4.5.1",
     "@fontsource/sriracha": "4.5.0",
+    "firebase": "^9.6.1",
+    "formik": "^2.2.9",
     "node-sass": "7.0.0",
     "normalize.css": "8.0.1",
     "react": "17.0.2",
@@ -12,7 +14,8 @@
     "react-router-dom": "6",
     "react-scripts": "4.0.3",
     "sass": "1.45.0",
-    "web-vitals": "1.0.1"
+    "web-vitals": "1.0.1",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
