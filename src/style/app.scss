@@ -1,7 +1,5 @@
 @import '~@fontsource/roboto/index.css';
 @import '~@fontsource/sriracha/index.css';
-@import './abstracts';
-
 
 #root {
   height: 100vh;
@@ -10,11 +8,28 @@
 
 .app {
   &-body {
-    width: 100%;
-    max-width: 860px;
+    width: 18rem;
     padding: 1rem;
     border-right: 1px solid #7373730f;
     height: 100%;
+
+    @include width(sm) {
+      margin: 0 auto;
+      order: 2;
+
+      & ~ .app-banner {
+        order: 1;
+      }
+    }
+
+    @include width(xs) {
+      margin: 0 auto;
+      order: 2;
+
+      & ~ .app-banner {
+        order: 1;
+      }
+    }
 
     &-content {
       &.welcome {
@@ -24,8 +39,6 @@
   }
 
   &-content {
-    display: grid;
-    grid-template-columns: 0fr 1fr;
     max-width: 860px;
     margin: 3rem auto;
     width: 80%;
@@ -110,10 +123,6 @@
     &-link {
       margin-top: 1rem;
       display: block;
-      
-      @include width(md) {
-        background-color: red;
-      }
 
       &:not(:nth-child(2)) {
         margin-top: 0.5rem;
@@ -179,8 +188,38 @@
       color: #3b3b3b;
     }
   }
+
+  &-inner {
+    display: grid;
+    grid-template-columns: 0fr 1fr;
+    transition: all 0.3s;
+
+    @include width(sm) {
+      grid-template-columns: 1fr;
+      grid-template-rows: 0fr 1fr;
+      width: 90%;
+    }
+
+    @include width(xs) {
+      grid-template-columns: 1fr;
+      grid-template-rows: 0fr 1fr;
+      width: 90%;
+    }
+  }
+}
+
+.error-message {
+  display: block;
+  color: #7c0000;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding-bottom: 8px;
 }
 
 .displaced-top {
   margin-top: 1rem;
+}
+
+.to-left {
+  transform: translateX(-100%);
 }

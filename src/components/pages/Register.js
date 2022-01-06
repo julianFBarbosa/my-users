@@ -1,88 +1,67 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Card from '../layouts/Card';
+import { useFormik, FormikProvider, Form } from 'formik';
+import * as Yup from 'yup';
 
+import Card from '../layouts/Card';
 import SocialImage from '../../assets/undraw_Mobile_login_re_9ntv.png';
 import Input from '../elements/Input';
 
 const Register = () => {
-  const [personalData, setPersonalData] = useState({
-    name: {
-      value: '',
-      label: 'Nome',
-      type: 'text',
+  const onSubmit = (values) => {
+    console.log('onSubmit values', values);
+  };
+
+  const firstPart = useFormik({
+    initialValues: {
+      name: '',
+      password: '',
+      repeatPassword: '',
     },
-    email: {
-      value: '',
-      label: 'E-mail',
-      type: 'email',
-    },
-    cpf: {
-      value: '',
-      label: 'CPF',
-      type: 'text',
-    },
-    pis: {
-      value: '',
-      label: 'PIS',
-      type: 'number',
-    },
-    password: {
-      value: '',
-      label: 'Senha',
-      type: 'password',
-    },
-    repeatPassword: {
-      value: '',
-      label: 'Repita a senha',
-      type: 'password',
-    },
+    onSubmit,
+    validateOnMount: true,
+    validationSchema: Yup.object({
+      email: Yup.string().required('O nome é obrigatório'),
+      password: Yup.string()
+        .required('Você deve inserir uma senha')
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+          'A senha deve ter pelo menos 8 caracteres, uma letra maíuscula, uma minúscula, um número e um caractere especial.'
+        ),
+      repeatPassword: Yup.string()
+        .required('Você deve confirmar sua senha')
+        .oneOf([Yup.ref('password'), null], 'As senhas devem conincidir'),
+    }),
   });
 
   // eslint-disable-next-line no-unused-vars
   const [addressData, setAddressData] = useState({
     country: '',
     state: '',
-    city: '',
-    cep: '',
-    street: '',
-    number: '',
-    complement: '',
   });
-
-  const handleChange = ({ target }) => {
-    const { name, value, id } = target;
-    const actualObject = personalData[id];
-
-    const updateData = {
-      ...personalData,
-      [name]: {
-        ...actualObject,
-        value,
-      },
-    };
-
-    setPersonalData(updateData);
-  };
 
   return (
     <Card>
       <div className='app-body'>
-        <p className=''>Cadastro de dados</p>
+        <h1 className='app-form-title'>Cadastro de dados</h1>
 
         <div>
-          {Object.entries(personalData).map(([name, infos]) => (
-            <Input
-              key={name}
-              label={infos.label}
-              id={name}
-              name={name}
-              type={infos.type}
-              value={infos.value}
-              onChange={handleChange}
-            />
-          ))}
-          <button className='app-form-button primary'>Próximo</button>
+          <FormikProvider value={firstPart}>
+            <Form>
+              {Object.entries(firstStageLabels).map(([name, infos]) => (
+                <Input
+                  key={name}
+                  label={infos.label}
+                  id={name}
+                  name={name}
+                  type={infos.type}
+                  value={infos.value}
+                  shouldValidate
+                />
+              ))}
+              <button className='app-form-button primary'>Próximo</button>
+            </Form>
+          </FormikProvider>
         </div>
         <Link to='/'>Voltar para o início</Link>
       </div>

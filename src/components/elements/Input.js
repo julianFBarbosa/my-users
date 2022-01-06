@@ -1,8 +1,30 @@
 import React from 'react';
+import { ErrorMessage, useField } from 'formik';
+import ErrorIndicator from './ErrorIndicator';
 
-const Input = ({ label, id, type, value, onChange, ...props }) => {
+const Input = ({
+  name,
+  label,
+  id,
+  type,
+  value,
+  onChange,
+  shouldValidate = false,
+  ...rest
+}) => {
+  console.log('value', value)
+  const [field, meta] = useField();
+  console.log('field', field);
+  const hasAnErrorAndHasBeenTouched = !!meta.error && meta.touched;
+  const propsWhenShouldValidateProps = {
+    isInvalid: hasAnErrorAndHasBeenTouched,
+  };
+
   return (
-    <div className='app-form-control'>
+    <div
+      className='app-form-control'
+      {...(shouldValidate ? propsWhenShouldValidateProps : '')}
+    >
       <label className='app-form-label' htmlFor={id}>
         {label}
       </label>
@@ -10,10 +32,17 @@ const Input = ({ label, id, type, value, onChange, ...props }) => {
         className='app-form-input'
         type={type}
         id={id}
-        value={value}
         onChange={onChange}
-        {...props}
+        name={name}
+        value={value}
+        {...field}
+        {...rest}
       />
+      {shouldValidate && (
+        <ErrorMessage name={name}>
+          {(error) => <ErrorIndicator>{error}</ErrorIndicator>}
+        </ErrorMessage>
+      )}
     </div>
   );
 };
