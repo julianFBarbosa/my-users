@@ -1,6 +1,5 @@
 import firebase from "firebase";
 
-firebase
 const registerUser = (email, password) => {
   firebase
     .auth()
