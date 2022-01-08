@@ -72,6 +72,10 @@
       color: #3b3b3b;
     }
 
+    &-control {
+      margin: 8px 0;
+    }
+
     &-button {
       display: block;
       text-align: center;
@@ -210,10 +214,10 @@
 
 .error-message {
   display: block;
-  color: #7c0000;
+  color: #c23939;
   font-weight: 600;
   font-size: 0.8rem;
-  padding-bottom: 8px;
+  padding-top: 8px;
 }
 
 .displaced-top {
