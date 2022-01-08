@@ -3,43 +3,39 @@ import { ErrorMessage, useField } from 'formik';
 import ErrorIndicator from './ErrorIndicator';
 
 const Input = ({
-  name,
   label,
   id,
-  type,
-  value,
-  onChange,
-  shouldValidate = false,
+  // type,
+  // value,
+  // onChange,
+  // shouldValidate = false,
   ...rest
 }) => {
-  console.log('value', value)
-  const [field, meta] = useField();
+  const [field, meta] = useField(rest);
+  const hasHerror = meta.touched && meta.error;
+  console.log('rest', rest);
+  console.log('rest.name', rest.name);
+  console.log('meta', meta);
   console.log('field', field);
-  const hasAnErrorAndHasBeenTouched = !!meta.error && meta.touched;
-  const propsWhenShouldValidateProps = {
-    isInvalid: hasAnErrorAndHasBeenTouched,
-  };
 
   return (
-    <div
-      className='app-form-control'
-      {...(shouldValidate ? propsWhenShouldValidateProps : '')}
-    >
+    <div className='app-form-control'>
       <label className='app-form-label' htmlFor={id}>
         {label}
       </label>
       <input
+        // type={type}
+        // id={id}
+        // onChange={onChange}
+        // name={name}
+        // value={value}
         className='app-form-input'
-        type={type}
-        id={id}
-        onChange={onChange}
-        name={name}
-        value={value}
         {...field}
         {...rest}
       />
-      {shouldValidate && (
-        <ErrorMessage name={name}>
+
+      {hasHerror && (
+        <ErrorMessage name={field.name}>
           {(error) => <ErrorIndicator>{error}</ErrorIndicator>}
         </ErrorMessage>
       )}

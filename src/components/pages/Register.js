@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik, FormikProvider, Form } from 'formik';
 import * as Yup from 'yup';
@@ -9,35 +9,28 @@ import Input from '../elements/Input';
 
 const Register = () => {
   const onSubmit = (values) => {
-    console.log('onSubmit values', values);
+    console.log('values.stringified', JSON.stringify(values, null, 2));
+    console.log('values', values);
   };
-
-  const firstPart = useFormik({
+  const registerForm = useFormik({
     initialValues: {
-      name: '',
+      email: '',
       password: '',
       repeatPassword: '',
     },
-    onSubmit,
     validateOnMount: true,
     validationSchema: Yup.object({
-      email: Yup.string().required('O nome é obrigatório'),
-      password: Yup.string()
-        .required('Você deve inserir uma senha')
-        .matches(
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-          'A senha deve ter pelo menos 8 caracteres, uma letra maíuscula, uma minúscula, um número e um caractere especial.'
-        ),
+      email: Yup.string().required('O e-mail é obrigatório'),
+      password: Yup.string().required('Você deve inserir uma senha'),
+      // .matches(
+      //   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      //   'A senha deve ter pelo menos 8 caracteres, uma letra maíuscula, uma minúscula, um número e um caractere especial.'
+      // ),
       repeatPassword: Yup.string()
         .required('Você deve confirmar sua senha')
         .oneOf([Yup.ref('password'), null], 'As senhas devem conincidir'),
     }),
-  });
-
-  // eslint-disable-next-line no-unused-vars
-  const [addressData, setAddressData] = useState({
-    country: '',
-    state: '',
+    onSubmit,
   });
 
   return (
@@ -45,24 +38,39 @@ const Register = () => {
       <div className='app-body'>
         <h1 className='app-form-title'>Cadastro de dados</h1>
 
-        <div>
-          <FormikProvider value={firstPart}>
-            <Form>
-              {Object.entries(firstStageLabels).map(([name, infos]) => (
-                <Input
-                  key={name}
-                  label={infos.label}
-                  id={name}
-                  name={name}
-                  type={infos.type}
-                  value={infos.value}
-                  shouldValidate
-                />
-              ))}
-              <button className='app-form-button primary'>Próximo</button>
-            </Form>
-          </FormikProvider>
-        </div>
+        <FormikProvider value={registerForm}>
+          {console.log('registerForm', registerForm)}
+          <Form>
+            <Input
+              label='E-mail'
+              id='email'
+              name='email'
+              type='email'
+              value={registerForm.values.email}
+              onChange={registerForm.handleChange}
+              onBlur={registerForm.handleChange}
+            />
+            <Input
+              label='Senha'
+              id='password'
+              name='password'
+              type='password'
+              value={registerForm.values.password}
+              onChange={registerForm.handleChange}
+              onBlur={registerForm.handleChange}
+            />
+            <Input
+              label='Repita a senha'
+              id='repeatPassword'
+              name='repeatPassword'
+              type='password'
+              value={registerForm.values.repeatPassword}
+              onChange={registerForm.handleChange}
+              onBlur={registerForm.handleChange}
+            />
+            <button className='app-form-button primary'>Cadastrar</button>
+          </Form>
+        </FormikProvider>
         <Link to='/'>Voltar para o início</Link>
       </div>
       <figure className='app-banner'>
