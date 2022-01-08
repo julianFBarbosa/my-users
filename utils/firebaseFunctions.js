@@ -1,4 +1,5 @@
-import firebase from "firebase";
+/* eslint-disable import/no-unresolved */
+import firebase from 'firebase';
 
 const registerUser = (email, password) => {
   firebase
