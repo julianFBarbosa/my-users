@@ -5,7 +5,8 @@
   "dependencies": {
     "@fontsource/roboto": "4.5.1",
     "@fontsource/sriracha": "4.5.0",
-    "firebase": "^9.6.1",
+    "firebase": "^9.6.2",
+    "firebase-admin": "^10.0.1",
     "formik": "^2.2.9",
     "node-sass": "7.0.0",
     "normalize.css": "8.0.1",

@@ -11,7 +11,7 @@ import { ReactComponent as GmailGitHub } from '../../assets/gmail-icon.svg';
 const UserLogin = () => {
   const loginData = useFormik({
     initialValues: {
-      login: 'teste',
+      login: '',
       password: '',
     },
     validationSchema: Yup.object({
@@ -24,6 +24,7 @@ const UserLogin = () => {
   });
   console.log('loginData', loginData);
   console.log('loginData.values.password', loginData.values.password);
+
   return (
     <div className='app-login-form'>
       <FormikProvider value={loginData}>

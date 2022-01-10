@@ -12,6 +12,8 @@
     padding: 1rem;
     border-right: 1px solid #7373730f;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 
     @include width(sm) {
       margin: 0 auto;
@@ -222,6 +224,10 @@
 
 .displaced-top {
   margin-top: 1rem;
+}
+
+.mt-auto {
+  margin-top: auto;
 }
 
 .to-left {

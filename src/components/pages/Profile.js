@@ -9,11 +9,11 @@ import Input from '../elements/Input';
 import { registerUser } from '../../utils/firebaseFunctions';
 import ErrorIndicator from '../elements/ErrorIndicator';
 
-const Register = () => {
+const Profile = () => {
   const [error, setError] = useState(false);
   const onSubmit = async (values) => {
-    const { name, email, password } = values;
-    const registerRequest = await registerUser(name, email, password);
+    const { email, password } = values;
+    const registerRequest = await registerUser(email, password);
     console.log('registerRequest', registerRequest);
 
     if (registerRequest.error) setError(`${registerRequest.message}`);
@@ -21,14 +21,12 @@ const Register = () => {
   };
   const registerForm = useFormik({
     initialValues: {
-      name: '',
       email: '',
       password: '',
       repeatPassword: '',
     },
     validateOnMount: true,
     validationSchema: Yup.object({
-      name: Yup.string().required('O nome é obrigatório'),
       email: Yup.string().required('O e-mail é obrigatório'),
       password: Yup.string().required('Você deve inserir uma senha'),
       // .matches(
@@ -49,15 +47,6 @@ const Register = () => {
 
         <FormikProvider value={registerForm}>
           <Form>
-            <Input
-              label='Nome'
-              id='name'
-              name='name'
-              type='text'
-              value={registerForm.values.name}
-              onChange={registerForm.handleChange}
-              onBlur={registerForm.handleChange}
-            />
             <Input
               label='E-mail'
               id='email'
@@ -102,4 +91,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Profile;
