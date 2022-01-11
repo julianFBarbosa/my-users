@@ -17,7 +17,6 @@ const Register = () => {
     console.log('registerRequest', registerRequest);
 
     if (registerRequest.error) setError(`${registerRequest.message}`);
-    console.log('error', error);
   };
   const registerForm = useFormik({
     initialValues: {

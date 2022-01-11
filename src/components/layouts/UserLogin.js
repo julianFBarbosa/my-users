@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FormikProvider, Form, useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -7,8 +7,27 @@ import Icon from '../elements/Icon';
 import Input from '../elements/Input';
 import { ReactComponent as IconGitHub } from '../../assets/github-icon.svg';
 import { ReactComponent as GmailGitHub } from '../../assets/gmail-icon.svg';
+import { loginUser } from '../../utils/firebaseFunctions';
+import ErrorIndicator from '../elements/ErrorIndicator';
 
 const UserLogin = () => {
+  const [error, setError] = useState(false);
+  // const onSubmit = (values) => {
+  //   const { name, email, password } = values;
+  //   const loginUser = loginUser(name, email, password);
+  //   console.log('loginUser', loginUser);
+
+  //   if (loginUser.error) setError(`${loginUser.message}`);
+  //   console.log('error', error);
+  // };
+
+  const onSubmit = async (values) => {
+    const { login, password } = values;
+    const registerRequest = await loginUser(login, password);
+    console.log('registerRequest', registerRequest);
+
+    if (registerRequest.error) setError(`${registerRequest.message}`);
+  };
   const loginData = useFormik({
     initialValues: {
       login: '',
@@ -18,12 +37,8 @@ const UserLogin = () => {
       login: Yup.string().required('O campo de login não pode estar vazio'),
       password: Yup.string().required('O campo de senha não pode estar vazio'),
     }),
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
-    },
+    onSubmit,
   });
-  console.log('loginData', loginData);
-  console.log('loginData.values.password', loginData.values.password);
 
   return (
     <div className='app-login-form'>
@@ -48,7 +63,10 @@ const UserLogin = () => {
             onBlur={loginData.handleBlur}
           />
           <div>
-            <button className='app-form-button primary'>Entrar</button>
+            {error && <ErrorIndicator>{error}</ErrorIndicator>}
+            <button className='app-form-button primary' type='submit'>
+              Entrar
+            </button>
             <Link
               className='app-form-button secondary displaced-top'
               to='/cadastro'

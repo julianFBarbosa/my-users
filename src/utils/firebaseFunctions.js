@@ -3,36 +3,25 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, collection } from 'firebase/firestore';
 import { app, db } from './firebaseConfig';
 
 const auth = getAuth(app);
 
 const registerUser = async (name, email, password) => {
   return createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
       const user = userCredential.user;
-      const userRef = doc(db, 'user', user.uid);
-      console.log('userRef', userRef);
+      const userCollection = collection(db, 'user-data');
+      const userRef = doc(db, 'user-data', user.uid);
+      const docRef = await getDoc(userRef);
 
       setDoc(userRef, {
-        name: 'San Francisco',
-        state: 'CA',
-        country: 'USA',
-        capital: false,
-        population: 860000,
-        regions: ['west_coast', 'norcal'],
+        name,
       });
-      // setDoc(
-      //   userRef,
-      //   {
-      //     name,
-      //   },
-      //   {
-      //     capital: true,
-      //     merge: true,
-      //   }
-      // );
+      console.log('userCollection', userCollection);
+      
+      console.log('docRef', docRef.data());
       return user;
     })
     .catch((error) => {
@@ -43,8 +32,17 @@ const registerUser = async (name, email, password) => {
 
 const loginUser = async (email, password) => {
   return signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
+      console.log('userCredential', userCredential);
       const user = userCredential.user;
+      const userRef = doc(db, 'user-data', user.uid);
+      const userDoc = await getDoc(userRef);
+      if (!userDoc.exists()) {
+        setDoc(userRef, {});
+      } else {
+        console.log('userDoc', userDoc.data());
+      }
+
       return user;
     })
     .catch((error) => {
